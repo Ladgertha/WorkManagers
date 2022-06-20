@@ -1,20 +1,16 @@
 package ru.ladgertha.workmanagers
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
-    private val applicationScope = CoroutineScope(Dispatchers.Default)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        applicationScope.launch {
-
-        }
+        ExampleCoroutineWorker.setPeriodicWork("Anna")
+        ExampleWorker.setPeriodicWork("Kristina")
+        ExampleListenableWorker.setPeriodicWork("Daniil")
     }
 }

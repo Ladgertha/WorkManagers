@@ -43,7 +43,7 @@ class ExampleWorker(context: Context, params: WorkerParameters) :
         fun setPeriodicWork(name: String) {
             val repeatingRequest =
                 PeriodicWorkRequestBuilder<ExampleWorker>(15, TimeUnit.MINUTES)
-                    .setConstraints(getConstraints())
+                    //.setConstraints(getConstraints())
                     .setInputData(getData(name))
                     .build()
 

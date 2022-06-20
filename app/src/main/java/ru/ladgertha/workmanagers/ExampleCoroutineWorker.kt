@@ -24,7 +24,7 @@ class ExampleCoroutineWorker(context: Context, params: WorkerParameters) :
 
         fun setOneTimeWork(name: String) {
             val oneTimeRequest = OneTimeWorkRequestBuilder<ExampleCoroutineWorker>()
-                .setConstraints(getConstraints())
+               // .setConstraints(getConstraints())
                 .setBackoffCriteria(BackoffPolicy.LINEAR, 10, TimeUnit.MINUTES)
                 .setInputData(getData(name))
                 .build()

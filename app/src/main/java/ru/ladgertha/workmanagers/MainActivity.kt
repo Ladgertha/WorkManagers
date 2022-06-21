@@ -1,6 +1,7 @@
 package ru.ladgertha.workmanagers
 
 import android.os.Bundle
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
@@ -8,9 +9,15 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        ExampleCoroutineWorker.setPeriodicWork("Anna")
-        ExampleWorker.setPeriodicWork("Kristina")
-        ExampleListenableWorker.setPeriodicWork("Daniil")
+        findViewById<Button>(R.id.startWorkers).setOnClickListener {
+            ExampleCoroutineWorker.setPeriodicWork("ExampleCoroutineWorker: name from periodic work")
+            ExampleCoroutineWorker.setOneTimeWork("ExampleCoroutineWorker: name from one time work")
+            ExampleWorker.setPeriodicWork("ExampleWorker: name from periodic work")
+            ExampleWorker.setOneTimeWork("ExampleWorker: name from one time work")
+            ExampleListenableWorker.setPeriodicWork("ExampleListenableWorker: name from periodic work")
+            ExampleListenableWorker.setOneTimeWork("ExampleListenableWorker: name from one time work")
+            // ExampleRxWorker.setPeriodicWork("ExampleRxWorker: name from periodic work")
+            // ExampleRxWorker.setOneTimeWork("ExampleRxWorker: name from one time work")
+        }
     }
 }

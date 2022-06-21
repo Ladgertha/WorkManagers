@@ -14,6 +14,9 @@ class ExampleListenableWorker(context: Context, params: WorkerParameters) :
     override fun startWork(): ListenableFuture<Result> {
         return CallbackToFutureAdapter.getFuture { completer ->
             Log.d("TEST", inputData.getString(NAME_KEY) ?: "No data")
+            Log.d("TEST", "ExampleListenableWorker ${Thread.currentThread().name}")
+            Thread.sleep(20000)
+            completer.set(Result.success())
         }
     }
 
@@ -34,7 +37,7 @@ class ExampleListenableWorker(context: Context, params: WorkerParameters) :
                 .build()
             WorkManager.getInstance().enqueueUniqueWork(
                 WORK_NAME,
-                ExistingWorkPolicy.APPEND,
+                ExistingWorkPolicy.REPLACE,
                 oneTimeRequest
             )
         }
@@ -42,13 +45,13 @@ class ExampleListenableWorker(context: Context, params: WorkerParameters) :
         fun setPeriodicWork(name: String) {
             val repeatingRequest =
                 PeriodicWorkRequestBuilder<ExampleListenableWorker>(15, TimeUnit.MINUTES)
-                    .setConstraints(getConstraints())
+                   // .setConstraints(getConstraints())
                     .setInputData(getData(name))
                     .build()
 
             WorkManager.getInstance().enqueueUniquePeriodicWork(
                 WORK_NAME,
-                ExistingPeriodicWorkPolicy.KEEP,
+                ExistingPeriodicWorkPolicy.REPLACE,
                 repeatingRequest
             )
         }

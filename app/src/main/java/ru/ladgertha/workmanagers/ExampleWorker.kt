@@ -12,6 +12,8 @@ class ExampleWorker(context: Context, params: WorkerParameters) :
     override fun doWork(): Result {
         return try {
             Log.d("TEST", inputData.getString(NAME_KEY) ?: "No data")
+            Log.d("TEST", "ExampleWorker ${Thread.currentThread().name}")
+            Thread.sleep(20000)
             Result.success()
         } catch (exception: Exception) {
             Result.failure()
@@ -29,13 +31,13 @@ class ExampleWorker(context: Context, params: WorkerParameters) :
 
         fun setOneTimeWork(name: String) {
             val oneTimeRequest = OneTimeWorkRequestBuilder<ExampleWorker>()
-                .setConstraints(getConstraints())
+               // .setConstraints(getConstraints())
                 .setBackoffCriteria(BackoffPolicy.LINEAR, 10, TimeUnit.MINUTES)
                 .setInputData(getData(name))
                 .build()
             WorkManager.getInstance().enqueueUniqueWork(
                 WORK_NAME,
-                ExistingWorkPolicy.APPEND,
+                ExistingWorkPolicy.REPLACE,
                 oneTimeRequest
             )
         }
@@ -49,7 +51,7 @@ class ExampleWorker(context: Context, params: WorkerParameters) :
 
             WorkManager.getInstance().enqueueUniquePeriodicWork(
                 WORK_NAME,
-                ExistingPeriodicWorkPolicy.KEEP,
+                ExistingPeriodicWorkPolicy.REPLACE,
                 repeatingRequest
             )
         }

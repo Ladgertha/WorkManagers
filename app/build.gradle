@@ -38,4 +38,6 @@ dependencies {
 
     implementation "android.arch.work:work-runtime-ktx:1.0.1"
     implementation "androidx.concurrent:concurrent-futures:1.1.0"
+    // Uncomment for RxWorker
+    // implementation "androidx.work:work-rxjava2:2.7.1"
 }

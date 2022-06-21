@@ -12,6 +12,8 @@ class ExampleCoroutineWorker(context: Context, params: WorkerParameters) :
     override suspend fun doWork(): Result {
         return try {
             Log.d("TEST", inputData.getString(NAME_KEY) ?: "No data")
+            Log.d("TEST", "ExampleCoroutineWorker ${Thread.currentThread().name}")
+            Thread.sleep(20000)
             Result.success()
         } catch (exception: Exception) {
             Result.failure()
@@ -30,7 +32,7 @@ class ExampleCoroutineWorker(context: Context, params: WorkerParameters) :
                 .build()
             WorkManager.getInstance().enqueueUniqueWork(
                 WORK_NAME,
-                ExistingWorkPolicy.APPEND,
+                ExistingWorkPolicy.REPLACE,
                 oneTimeRequest
             )
         }
@@ -38,13 +40,13 @@ class ExampleCoroutineWorker(context: Context, params: WorkerParameters) :
         fun setPeriodicWork(name: String) {
             val repeatingRequest =
                 PeriodicWorkRequestBuilder<ExampleCoroutineWorker>(15, TimeUnit.MINUTES)
-                    .setConstraints(getConstraints())
+                   // .setConstraints(getConstraints())
                     .setInputData(getData(name))
                     .build()
 
             WorkManager.getInstance().enqueueUniquePeriodicWork(
                 WORK_NAME,
-                ExistingPeriodicWorkPolicy.KEEP,
+                ExistingPeriodicWorkPolicy.REPLACE,
                 repeatingRequest
             )
         }

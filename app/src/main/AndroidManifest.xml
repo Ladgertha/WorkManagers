@@ -4,6 +4,7 @@
     package="ru.ladgertha.workmanagers">
 
     <application
+        android:name=".ExampleWorkerApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -22,6 +23,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <provider
+            android:name="androidx.work.impl.WorkManagerInitializer"
+            android:authorities="ru.ladgertha.workmanagers.workmanager-init"
+            tools:node="remove"/>
     </application>
 
 </manifest>
